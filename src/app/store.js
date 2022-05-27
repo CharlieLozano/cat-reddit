@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import frontPageReducer from "../features/FrontPage/frontPageSlice";
+import postsReducer from "../features/Posts/postsSlice";
+import commentsReducer from "../features/Comments/commentsSlice";
 
 export const store = configureStore({
   reducer: {
-    frontPage: frontPageReducer,
+    posts: postsReducer,
+    comments: commentsReducer
   },
 });
