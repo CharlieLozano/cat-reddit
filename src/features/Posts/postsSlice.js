@@ -1,13 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Reddit from "../../util/Reddit";
 
-export const fetchPosts = createAsyncThunk(
-	"frontPage/fetchFrontPage",
-	async () => {
-		const response = await Reddit.fetchFrontPage();
-		return response;
-	}
-);
+export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
+	const response = await Reddit.fetchPosts();
+	return response;
+});
 
 const initialState = {
 	posts: {},

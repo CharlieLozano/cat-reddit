@@ -4,6 +4,7 @@ import {
 	selectAllPosts,
 	selectPostsStatus,
 	selectPostsError,
+	fetchPosts,
 } from "./postsSlice";
 
 const FrontPage = () => {
@@ -14,8 +15,9 @@ const FrontPage = () => {
 
 	useEffect(() => {
 		if (postsStatus === "idle") {
-			dispatch(fetchFrontPagePosts());
+			dispatch(fetchPosts());
 		}
+		console.log(allPosts);
 	}, [dispatch, postsStatus]);
 
 	return <div>FrontPage</div>;
