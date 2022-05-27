@@ -12,7 +12,7 @@ const getJson = async (url, errorMsg = "Hmm something went wrong") => {
 
 // Reddit componenent
 const Reddit = {
-	async fetchFrontPage() {
+	async fetchPosts() {
 		try {
 			const response = await getJson(MULTI_PATH);
 			return response.data;
