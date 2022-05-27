@@ -2,6 +2,10 @@
 	"name": "cat-reddit",
 	"version": "0.1.0",
 	"private": true,
+	"jest": {
+		"verbose": true,
+		"testEnvironment": "jsdom"
+	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.8.1",
 		"@testing-library/jest-dom": "^5.16.4",
@@ -16,7 +20,8 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"test": "react-scripts test",
+		"test": "jest",
+		"test:watch": "npm test -- --watch",
 		"eject": "react-scripts eject"
 	},
 	"eslintConfig": {
@@ -38,7 +43,9 @@
 		]
 	},
 	"devDependencies": {
-		"react-scripts": "^5.0.1",
-		"jest": "^28.1.0"
+		"babel-jest": "^28.1.0",
+		"jest": "^28.1.0",
+		"jest-environment-jsdom": "^28.1.0",
+		"react-scripts": "^5.0.1"
 	}
 }
