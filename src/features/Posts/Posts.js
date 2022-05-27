@@ -7,7 +7,7 @@ import {
 	fetchPosts,
 } from "./postsSlice";
 
-const FrontPage = () => {
+const Posts = () => {
 	const dispatch = useDispatch();
 	const allPosts = useSelector(selectAllPosts);
 	const postsStatus = useSelector(selectPostsStatus);
@@ -20,7 +20,7 @@ const FrontPage = () => {
 		console.log(allPosts);
 	}, [dispatch, postsStatus]);
 
-	return <div>FrontPage</div>;
+	return <div>Posts</div>;
 };
 
-export default FrontPage;
+export default Posts;
