@@ -6,6 +6,7 @@ import {
 	selectPostsError,
 	fetchPosts,
 } from "./postsSlice";
+import Post from "../../components/Post";
 
 export const Posts = () => {
 	const dispatch = useDispatch();
@@ -17,9 +18,20 @@ export const Posts = () => {
 		if (postsStatus === "idle") {
 			dispatch(fetchPosts());
 		}
-		console.log(allPosts);
 	}, [dispatch, postsStatus]);
-	return <div>Posts</div>;
+	return (
+		<div>
+			{allPosts.map((post) => (
+				<Post
+					key={post.data.name}
+					title={post.data.title}
+					url={post.data.url}
+					subreddit={post.data.subreddit}
+					selftext={post.data.selftext}
+				/>
+			))}
+		</div>
+	);
 };
 
 export default Posts;
