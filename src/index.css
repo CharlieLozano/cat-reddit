@@ -1,11 +1,6 @@
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	max-width: max-content;
-}
-
+/* general style, center scale with size */
 html {
+	box-sizing: border-box;
 	background: #333;
 	color: whitesmoke;
 	min-height: 100vh;
@@ -18,17 +13,19 @@ html {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+/* don't know why this is here but it came with create-react-app */
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
 }
 
+/* set post-img size relative to parent component */
 .post-img {
 	width: 100%;
 	height: auto;
 	margin: 10px 0;
 }
-
+/* pust a bit of space above ane below each card, we can change this later to make the post card itself put space above and below */
 .post h2 {
 	margin-top: 50px;
 }
