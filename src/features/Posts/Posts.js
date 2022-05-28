@@ -19,17 +19,19 @@ export const Posts = () => {
 			dispatch(fetchPosts());
 		}
 	}, [dispatch, postsStatus]);
+
 	return (
 		<div>
-			{allPosts.map((post) => (
-				<Post
-					key={post.data.name}
-					title={post.data.title}
-					url={post.data.url}
-					subreddit={post.data.subreddit}
-					selftext={post.data.selftext}
-				/>
-			))}
+			{allPosts &&
+				allPosts.map((post) => (
+					<Post
+						key={post.data.name}
+						title={post.data.title}
+						url={post.data.url}
+						subreddit={post.data.subreddit}
+						selftext={post.data.selftext}
+					/>
+				))}
 		</div>
 	);
 };

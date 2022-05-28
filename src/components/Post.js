@@ -3,11 +3,11 @@ import React from "react";
 const Post = (props) => {
 	const { title, url, subreddit, selftext } = props;
 	return (
-		<div>
+		<div className="post">
 			<h2>{title}</h2>
-			<img src={url} />
+			<img className="post-img" src={url} />
 			{selftext && <p>{selftext}</p>}
-			<h3>{subreddit}</h3>
+			<h3>r/{subreddit}</h3>
 		</div>
 	);
 };
