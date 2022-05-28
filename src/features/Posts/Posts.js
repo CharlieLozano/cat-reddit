@@ -7,7 +7,7 @@ import {
 	fetchPosts,
 } from "./postsSlice";
 
-const Posts = () => {
+export const Posts = () => {
 	const dispatch = useDispatch();
 	const allPosts = useSelector(selectAllPosts);
 	const postsStatus = useSelector(selectPostsStatus);
@@ -19,7 +19,6 @@ const Posts = () => {
 		}
 		console.log(allPosts);
 	}, [dispatch, postsStatus]);
-
 	return <div>Posts</div>;
 };
 
