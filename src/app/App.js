@@ -5,7 +5,7 @@ import { Posts } from "../features/Posts/Posts";
 export default function App() {
 	return (
 		<Router>
-			<h1>Hello</h1>
+			<h1>Cat Reddit</h1>
 			<Routes>{/*<Route path='/' element={<HomePage/>}/>*/}</Routes>
 			<Posts />
 		</Router>
