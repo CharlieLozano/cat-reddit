@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 
-// DELETE ME AND REPLACE WITH USEEFFECT IN PRODUCTION
+// DELETE ME AND REPLACE INSTANCES WITH USEEFFECT IN PRODUCTION
 
 export const useEffectOnce = (effect) => {
 	const destroyFunc = useRef();

@@ -15,7 +15,7 @@ export const Posts = () => {
 	const postsStatus = useSelector(selectPostsStatus);
 	const postsError = useSelector(selectPostsError);
 
-	// DELETE ME AND REPLACE WITH USEEFFECT BEFORE PRODUCTION VERSION. FOR MORE INFO SEE: https://dev.to/ag-grid/react-18-avoiding-use-effect-getting-called-twice-4i9e
+	// DELETE USEEFFECTONCE AND REPLACE WITH USEEFFECT BEFORE PRODUCTION VERSION. FOR MORE INFO SEE: https://dev.to/ag-grid/react-18-avoiding-use-effect-getting-called-twice-4i9e
 	useEffectOnce(() => {
 		if (postsStatus === "idle") {
 			dispatch(fetchPosts());
