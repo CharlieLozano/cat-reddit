@@ -1,7 +1,8 @@
 import React from "react";
+import Posts from "../features/Posts/Posts";
 
 const HomePage = () => {
-	return <div>HomePage</div>;
+	return <Posts />;
 };
 
 export default HomePage;
