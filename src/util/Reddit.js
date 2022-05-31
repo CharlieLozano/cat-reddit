@@ -10,16 +10,28 @@ const getJson = async (url, errorMsg = "Hmm something went wrong") => {
 	return response.json();
 };
 
+const returnListing = (children) => {
+	const listing = []
+	children.forEach(child => {
+		const short = child.data
+		listing.push({
+			id: short.id,
+			url: short.permalink,
+			author: short.author,
+			title: short.title,
+			thumbnail: short.thumbnail,
+			created: short.created
+		})
+	})
+	return listing
+}
+
 // Reddit componenent
 const Reddit = {
-	async fetchHomePage(searchTerm, filters, after) {
 
+	async fetchHomePage() {
 		// Defining the url for the fetch
-		const url = `https://www.reddit.com/user/outside-research4792/m/cats/search.json?q=`
-		let endpoint = url + searchTerm
-		if(after){
-			endpoint = `${endpoint}&after=${after}`
-		}
+		const url = `https://www.reddit.com/user/outside-research4792/m/cats.json`
 
 		try {
 			//Fetching and making a copy of the childrens since it will be a destructive process
@@ -32,33 +44,17 @@ const Reddit = {
 				children = children.filter(child => child.data.thumbnail.includes(format))
 			});
 
-			// Filter by filters
-			filters.forEach(filter => {
-				children = children.filter(child => child.data.title.includes(filter))
-			});
-
-
 			// Make the listing array of objects
-			const listings = []
-
-			children.forEach(child => {
-				const short = child.data
-				listings.push({
-					id: short.id,
-					url: short.permalink,
-					author: short.author,
-					title: short.title,
-					thumbnail: short.thumbnail,
-					created: short.created
-				})
-			})
+			const listing = returnListing(children)
 
 			// Returning and object with two keys
-			return {after: response.after, listings: listings};
+			return {after: response.after, listing: listing};
+
 		} catch (err) {
 			return err.message;
 		}
 	},
+
 	async fetchPostPage(id) {
 		const endpoint = `https://www.reddit.com/r/${subreddit}/comments/${id}.json`
 		
@@ -94,6 +90,79 @@ const Reddit = {
 
 			// Returning and object with two keys		
 			return {post: post, comments: newComments};
+		} catch (err) {
+			return err.message;
+		}
+	},
+
+	async fetchSearch(searchTerm, filters) {
+		// Defining the url for the fetch
+		const url = `https://www.reddit.com/user/outside-research4792/m/cats/search.json?q=`
+		let endpoint = url + searchTerm
+
+		try {
+			//Fetching and making a copy of the childrens since it will be a destructive process
+			const response = await getJson(endpoint);
+			let children = [...response.data.children]
+			
+			// Filter by format
+			const formats = ['png', 'jpg']
+			formats.forEach(format => {
+				children = children.filter(child => child.data.thumbnail.includes(format))
+			});
+
+			// Filter by filters
+			filters.forEach(filter => {
+				children = children.filter(child => child.data.title.includes(filter))
+			});
+
+			// Make the listing array of objects
+			const listings = returnListing(children)
+
+			// Returning and object with two keys
+			return {after: response.after, listings: listings};
+
+		} catch (err) {
+			return err.message;
+		}
+	},
+
+	async fetchScroll(searchTerm, filters, after) {
+
+		// Defining the url for the fetch
+		const url = `https://www.reddit.com/user/outside-research4792/m/cats/search.json?q=`
+		let endpoint = url + searchTerm
+		
+		// Checking if there's after
+		if(after){
+			endpoint = `${endpoint}&after=${after}`
+		} else{
+			return
+		}
+
+		try {
+			//Fetching and making a copy of the childrens since it will be a destructive process
+			const response = await getJson(endpoint);
+			let children = [...response.data.children]
+			
+			// Filter by format
+			const formats = ['png', 'jpg']
+			formats.forEach(format => {
+				children = children.filter(child => child.data.thumbnail.includes(format))
+			});
+
+			// Filter by filters
+			filters.forEach(filter => {
+				children = children.filter(child => child.data.title.includes(filter))
+			});
+
+
+			// Make the listing array of objects
+			const listings = returnListing(children)
+
+			// Returning and object with two keys
+			return {after: response.after, listings: listings};
+
 		} catch (err) {
 			return err.message;
 		}
