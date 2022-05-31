@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffectOnce } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	selectAllPosts,
@@ -14,25 +14,30 @@ export const Posts = () => {
 	const postsStatus = useSelector(selectPostsStatus);
 	const postsError = useSelector(selectPostsError);
 
-	useEffect(() => {
+	useEffectOnce(() => {
 		if (postsStatus === "idle") {
 			dispatch(fetchPosts());
 		}
-	}, [dispatch, postsStatus]);
+	}, [postsStatus]);
 
 	return (
 		<div>
 			{/* if there are posts in state map over them and return a list of Post components which are shown on the front page */}
 			{allPosts &&
-				allPosts.map((post) => (
-					<Post
-						key={post.data.name}
-						title={post.data.title}
-						url={post.data.url}
-						subreddit={post.data.subreddit}
-						selftext={post.data.selftext}
-					/>
-				))}
+				allPosts.map((post) => {
+					{
+						console.log(post.data.id);
+					}
+					return (
+						<Post
+							key={post.data.id}
+							title={post.data.title}
+							url={post.data.url}
+							subreddit={post.data.subreddit}
+							selftext={post.data.selftext}
+						/>
+					);
+				})}
 		</div>
 	);
 };
