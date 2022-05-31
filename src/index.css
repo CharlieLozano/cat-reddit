@@ -40,6 +40,9 @@ code {
 	margin: 10px 0;
 }
 /* pust a bit of space above ane below each card, we can change this later to make the post card itself put space above and below */
+.post {
+	padding: 20px;
+}
 .post h2 {
 	margin-top: 50px;
 }
