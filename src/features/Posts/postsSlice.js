@@ -7,7 +7,7 @@ export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
 });
 
 const initialState = {
-	posts: {},
+	listings: [],
 	before: "",
 	after: "",
 	// My thinking here is that the status doesn't need to be a loading Boolean, it can equally be a string to reflect the status of the fetch request
@@ -27,7 +27,7 @@ const postsSlice = createSlice({
 			})
 			.addCase(fetchPosts.fulfilled, (state, action) => {
 				state.status = "succeeded";
-				state.posts.posts = action.payload.children;
+				action.payload.children.forEach((child) => state.listings.push(child));
 				state.nextPage = action.payload.after;
 				state.prevPage = action.payload.before;
 			})
@@ -38,7 +38,7 @@ const postsSlice = createSlice({
 	},
 });
 
-export const selectAllPosts = (state) => state.posts.posts.posts;
+export const selectAllPosts = (state) => state.posts.listings;
 
 export const selectPostsStatus = (state) => state.posts.status;
 
