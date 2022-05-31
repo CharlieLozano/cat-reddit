@@ -8,6 +8,7 @@ import {
 	fetchPosts,
 } from "./postsSlice";
 import Post from "../../components/Post";
+import { Link } from "react-router-dom";
 
 export const Posts = () => {
 	const dispatch = useDispatch();
@@ -23,13 +24,19 @@ export const Posts = () => {
 	}, [postsStatus]);
 
 	return (
-		<div>
+		<ul className="postLink">
 			{/* if there are posts in state map over them and return a list of Post components which are shown on the front page */}
 			{allPosts &&
 				allPosts.map((post) => {
-					return <Post key={post.data.id} data={post.data} />;
+					return (
+						<li>
+							<Link to={`${post.data.subreddit}/${post.data.id}`}>
+								<Post key={post.data.id} data={post.data} />
+							</Link>
+						</li>
+					);
 				})}
-		</div>
+		</ul>
 	);
 };
 

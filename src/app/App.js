@@ -1,13 +1,18 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import React from "react";
-import { Posts } from "../features/Posts/Posts";
+import HomePage from "../pages/HomePage";
+import PostPage from "../pages/PostPage";
 
 export default function App() {
 	return (
 		<Router>
-			<h1>Cat Reddit</h1>
-			<Routes>{/*<Route path='/' element={<HomePage/>}/>*/}</Routes>
-			<Posts />
+			<Link to={"/"}>
+				<h1>Cat Reddit</h1>
+			</Link>
+			<Routes>
+				<Route index path="/" element={<HomePage />} />
+				<Route path="/:subreddit/:postId" element={<PostPage />} />
+			</Routes>
 		</Router>
 	);
 }
