@@ -27,15 +27,7 @@ export const Posts = () => {
 			{/* if there are posts in state map over them and return a list of Post components which are shown on the front page */}
 			{allPosts &&
 				allPosts.map((post) => {
-					return (
-						<Post
-							key={post.data.id}
-							title={post.data.title}
-							url={post.data.url}
-							subreddit={post.data.subreddit}
-							selftext={post.data.selftext}
-						/>
-					);
+					return <Post key={post.data.id} data={post.data} />;
 				})}
 		</div>
 	);
