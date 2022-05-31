@@ -22,7 +22,7 @@ export const Posts = () => {
 
 	return (
 		<div>
-			{/* if there are posts in state map over them and return a list os Post components which are shown on the front page */}
+			{/* if there are posts in state map over them and return a list of Post components which are shown on the front page */}
 			{allPosts &&
 				allPosts.map((post) => (
 					<Post
