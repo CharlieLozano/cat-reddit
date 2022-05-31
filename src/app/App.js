@@ -11,7 +11,7 @@ export default function App() {
 			</Link>
 			<Routes>
 				<Route index path="/" element={<HomePage />} />
-				<Route path=":postId" element={<PostPage />} />
+				<Route path="/:subreddit/:postId" element={<PostPage />} />
 			</Routes>
 		</Router>
 	);

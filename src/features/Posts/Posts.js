@@ -30,7 +30,7 @@ export const Posts = () => {
 				allPosts.map((post) => {
 					return (
 						<li>
-							<Link to={post.data.id}>
+							<Link to={`${post.data.subreddit}/${post.data.id}`}>
 								<Post key={post.data.id} data={post.data} />
 							</Link>
 						</li>
