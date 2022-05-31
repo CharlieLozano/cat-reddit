@@ -1,4 +1,5 @@
-import React, { useEffectOnce } from "react";
+import React, { useEffect } from "react";
+import { useEffectOnce } from "../../util/HelperFunc";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	selectAllPosts,
@@ -14,6 +15,7 @@ export const Posts = () => {
 	const postsStatus = useSelector(selectPostsStatus);
 	const postsError = useSelector(selectPostsError);
 
+	// DELETE ME AND REPLACE WITH USEEFFECT BEFORE PRODUCTION VERSION. FOR MORE INFO SEE: https://dev.to/ag-grid/react-18-avoiding-use-effect-getting-called-twice-4i9e
 	useEffectOnce(() => {
 		if (postsStatus === "idle") {
 			dispatch(fetchPosts());
@@ -25,9 +27,6 @@ export const Posts = () => {
 			{/* if there are posts in state map over them and return a list of Post components which are shown on the front page */}
 			{allPosts &&
 				allPosts.map((post) => {
-					{
-						console.log(post.data.id);
-					}
 					return (
 						<Post
 							key={post.data.id}
