@@ -24,17 +24,19 @@ export const Posts = () => {
 	}, [postsStatus]);
 
 	return (
-		<div>
+		<ul className="postLink">
 			{/* if there are posts in state map over them and return a list of Post components which are shown on the front page */}
 			{allPosts &&
 				allPosts.map((post) => {
 					return (
-						<Link to={post.data.id}>
-							<Post key={post.data.id} data={post.data} />
-						</Link>
+						<li>
+							<Link to={post.data.id}>
+								<Post key={post.data.id} data={post.data} />
+							</Link>
+						</li>
 					);
 				})}
-		</div>
+		</ul>
 	);
 };
 

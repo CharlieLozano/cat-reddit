@@ -13,10 +13,24 @@ html {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+/* reset all styles for links */
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
 /* don't know why this is here but it came with create-react-app */
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
+}
+
+.postLink li {
+	list-style-type: none;
+}
+
+.postLink li:hover {
+	background-color: #424242;
 }
 
 /* set post-img size relative to parent component */
