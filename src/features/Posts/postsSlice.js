@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Reddit from "../../util/Reddit";
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-	const response = await Reddit.fetchPosts();
+	const response = await Reddit.fetchHomePage();
 	return response;
 });
 

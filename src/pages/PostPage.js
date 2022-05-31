@@ -1,4 +1,7 @@
-export default function PostPage() {
+import React from "react";
 
-  return ();
-}
+const PostPage = () => {
+	return <div>PostPage</div>;
+};
+
+export default PostPage;
