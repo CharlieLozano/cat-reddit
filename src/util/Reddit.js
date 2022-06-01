@@ -19,7 +19,7 @@ const returnListing = (children) => {
 			subreddit: short.subreddit,
 			thumbnail: short.thumbnail,
 			selftext: short.selftext,
-			created: short.created,
+			created: short.created_utc,
 		});
 	});
 	return listing;
@@ -40,7 +40,6 @@ const Reddit = {
 
 			// Make the listing array of objects
 			const listing = returnListing(children);
-
 			// Returning and object with two keys
 			return {
 				after: response.data.after,
