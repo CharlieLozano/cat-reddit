@@ -27,15 +27,18 @@ export const Posts = () => {
 		<ul className="postLink">
 			{/* if there are posts in state map over them and return a list of Post components which are shown on the front page */}
 			{allPosts &&
-				allPosts.map((post) => {
-					return (
-						<li key={post.id}>
-							<Link to={`${post.subreddit}/${post.id}`}>
-								<Post data={post} />
-							</Link>
-						</li>
-					);
-				})}
+				allPosts
+					.slice()
+					.sort((a, b) => b.created - a.created)
+					.map((post) => {
+						return (
+							<li key={post.id}>
+								<Link to={`${post.subreddit}/${post.id}`}>
+									<Post data={post} />
+								</Link>
+							</li>
+						);
+					})}
 		</ul>
 	);
 };
