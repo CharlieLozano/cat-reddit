@@ -7,10 +7,10 @@ const Post = ({ data }) => {
 	return (
 		<div className="post">
 			<h2>{title}</h2>
+			<span>r/{subreddit}</span>
 			<img className="post-img" src={url} />
 			{selftext && <p>{selftext}</p>}
 			<TimeDate timestamp={created} />
-			<h3>r/{subreddit}</h3>
 		</div>
 	);
 };
