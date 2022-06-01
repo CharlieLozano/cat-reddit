@@ -149,14 +149,7 @@ const Reddit = {
 			//Fetching and making a copy of the childrens since it will be a destructive process
 			const response = await getJson(endpoint);
 			let children = filterByMedia(response)
-
-			// Filter by format
-			formats.forEach((format) => {
-				children = children.filter(
-					(child) => !child.data.is_video && child.data.is_reddit_media_domain
-				);
-			});
-
+			
 			// Filter by filters
 			filters.forEach((filter) => {
 				children = children.filter((child) =>
