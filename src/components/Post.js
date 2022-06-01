@@ -5,6 +5,7 @@ const Post = ({ data }) => {
 	const { title, url, subreddit, selftext } = data;
 	return (
 		<div className="post">
+			{console.log(data)}
 			<h2>{title}</h2>
 			<img className="post-img" src={url} />
 			{selftext && <p>{selftext}</p>}
