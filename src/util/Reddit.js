@@ -25,6 +25,15 @@ const returnListing = (children) => {
 	return listing;
 };
 
+const filterByMedia = (response) => {
+
+	const result =  [...response.data.children].filter(
+		(child) => !child.data.is_video && child.data.is_reddit_media_domain
+	);
+
+	return result
+}
+
 // Reddit componenent
 const Reddit = {
 	async fetchHomePage() {
@@ -34,9 +43,7 @@ const Reddit = {
 		try {
 			//Fetching and making a copy of the childrens since it will be a destructive process and filter by content
 			const response = await getJson(endpoint);
-			const children = [...response.data.children].filter(
-				(child) => !child.data.is_video && child.data.is_reddit_media_domain
-			);
+			const children = filterByMedia(response)
 
 			// Make the listing array of objects
 			const listing = returnListing(children);
@@ -45,6 +52,7 @@ const Reddit = {
 				after: response.data.after,
 				listing: listing,
 			};
+
 		} catch (err) {
 			return err.message;
 		}
@@ -84,7 +92,11 @@ const Reddit = {
 			});
 
 			// Returning and object with two keys
-			return { post: post, comments: newComments };
+			return { 
+				post: post, 
+				comments: newComments 
+			};
+
 		} catch (err) {
 			return err.message;
 		}
@@ -98,15 +110,7 @@ const Reddit = {
 		try {
 			//Fetching and making a copy of the childrens since it will be a destructive process
 			const response = await getJson(endpoint);
-			let children = [...response.data.children];
-
-			// Filter by format
-			const formats = ["png", "jpg"];
-			formats.forEach((format) => {
-				children = children.filter((child) =>
-					child.data.thumbnail.includes(format)
-				);
-			});
+			let children = filterByMedia(response)
 
 			// Filter by filters
 			filters.forEach((filter) => {
@@ -119,7 +123,11 @@ const Reddit = {
 			const listings = returnListing(children);
 
 			// Returning and object with two keys
-			return { after: response.after, listings: listings };
+			return { 
+				after: response.after, 
+				listings: listings 
+			};
+
 		} catch (err) {
 			return err.message;
 		}
@@ -140,16 +148,8 @@ const Reddit = {
 		try {
 			//Fetching and making a copy of the childrens since it will be a destructive process
 			const response = await getJson(endpoint);
-			let children = [...response.data.children];
-
-			// Filter by format
-			const formats = ["png", "jpg"];
-			formats.forEach((format) => {
-				children = children.filter((child) =>
-					child.data.thumbnail.includes(format)
-				);
-			});
-
+			let children = filterByMedia(response)
+			
 			// Filter by filters
 			filters.forEach((filter) => {
 				children = children.filter((child) =>
@@ -161,7 +161,10 @@ const Reddit = {
 			const listings = returnListing(children);
 
 			// Returning and object with two keys
-			return { after: response.after, listings: listings };
+			return { 
+				after: response.after, 
+				listings: listings };
+
 		} catch (err) {
 			return err.message;
 		}
