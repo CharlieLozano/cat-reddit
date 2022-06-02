@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Reddit from "../../util/Reddit";
 
-export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-	const response = await Reddit.fetchHomePage();
-	return response;
-});
+export const fetchPosts = createAsyncThunk(
+	"posts/fetchPosts",
+	async (nextListing) => {
+		const response = await Reddit.fetchHomePage(nextListing);
+		return response;
+	}
+);
 
 const initialState = {
 	listing: [],
@@ -35,6 +38,8 @@ const postsSlice = createSlice({
 			});
 	},
 });
+
+export const selectNextListing = (state) => state.posts.after;
 
 export const selectAllPosts = (state) => state.posts.listing;
 

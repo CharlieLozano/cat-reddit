@@ -26,25 +26,28 @@ const returnListing = (children) => {
 };
 
 const filterByMedia = (response) => {
-
-	const result =  [...response.data.children].filter(
-		(child) => !child.data.is_video && child.data.is_reddit_media_domain
-	);
-
-	return result
-}
+	const result = [...response.data.children].filter((child) => {
+		return !child.data.is_video && child.data.is_reddit_media_domain;
+	});
+	return result;
+};
 
 // Reddit componenent
 const Reddit = {
-	async fetchHomePage() {
+	async fetchHomePage(after = null) {
 		// Defining the url for the fetch
 		const endpoint = `https://www.reddit.com/user/outside-research4792/m/cats.json`;
 
 		try {
-			//Fetching and making a copy of the childrens since it will be a destructive process and filter by content
-			const response = await getJson(endpoint);
-			const children = filterByMedia(response)
-
+			let response;
+			// if we want to get the first frontpage
+			if (!after) {
+				response = await getJson(endpoint);
+				// if we want to get any frontpage other than the first page
+			} else {
+				response = await getJson(`${endpoint}?count=25&after=${after}`);
+			}
+			const children = filterByMedia(response);
 			// Make the listing array of objects
 			const listing = returnListing(children);
 			// Returning and object with two keys
@@ -52,7 +55,6 @@ const Reddit = {
 				after: response.data.after,
 				listing: listing,
 			};
-
 		} catch (err) {
 			return err.message;
 		}
@@ -92,11 +94,10 @@ const Reddit = {
 			});
 
 			// Returning and object with two keys
-			return { 
-				post: post, 
-				comments: newComments 
+			return {
+				post: post,
+				comments: newComments,
 			};
-
 		} catch (err) {
 			return err.message;
 		}
@@ -110,7 +111,7 @@ const Reddit = {
 		try {
 			//Fetching and making a copy of the childrens since it will be a destructive process
 			const response = await getJson(endpoint);
-			let children = filterByMedia(response)
+			let children = filterByMedia(response);
 
 			// Filter by filters
 			filters.forEach((filter) => {
@@ -123,11 +124,10 @@ const Reddit = {
 			const listings = returnListing(children);
 
 			// Returning and object with two keys
-			return { 
-				after: response.after, 
-				listings: listings 
+			return {
+				after: response.after,
+				listings: listings,
 			};
-
 		} catch (err) {
 			return err.message;
 		}
@@ -148,8 +148,8 @@ const Reddit = {
 		try {
 			//Fetching and making a copy of the childrens since it will be a destructive process
 			const response = await getJson(endpoint);
-			let children = filterByMedia(response)
-			
+			let children = filterByMedia(response);
+
 			// Filter by filters
 			filters.forEach((filter) => {
 				children = children.filter((child) =>
@@ -161,10 +161,10 @@ const Reddit = {
 			const listings = returnListing(children);
 
 			// Returning and object with two keys
-			return { 
-				after: response.after, 
-				listings: listings };
-
+			return {
+				after: response.after,
+				listings: listings,
+			};
 		} catch (err) {
 			return err.message;
 		}
