@@ -112,7 +112,7 @@ const Reddit = {
 			//Fetching and making a copy of the childrens since it will be a destructive process
 			const response = await getJson(endpoint);
 			let children = filterByMedia(response);
-
+			console.log(children);
 			// Filter by filters
 			filters.forEach((filter) => {
 				children = children.filter((child) =>
@@ -126,6 +126,7 @@ const Reddit = {
 			// Returning and object with two keys
 			return {
 				after: response.after,
+				before: response.before,
 				listings: listings,
 			};
 		} catch (err) {
