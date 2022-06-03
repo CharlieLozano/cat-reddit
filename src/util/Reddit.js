@@ -34,9 +34,9 @@ const filterByMedia = (response) => {
 
 // Reddit componenent
 const Reddit = {
-	async fetchHomePage(after = null) {
+	async fetchHomePage(after) {
 		// Defining the url for the fetch
-		const endpoint = `https://www.reddit.com/user/outside-research4792/m/cats.json`;
+		const endpoint = `https://www.reddit.com/user/outside-research4792/m/cats/new.json`;
 
 		try {
 			let response;
