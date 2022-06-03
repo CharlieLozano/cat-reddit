@@ -27,6 +27,7 @@ const postsSlice = createSlice({
 			.addCase(fetchPosts.pending, (state) => {
 				state.status = "loading";
 			})
+			// set the status to last if it is the last page
 			.addCase(fetchPosts.fulfilled, (state, action) => {
 				if (action.payload.after === "") {
 					state.status = "last";

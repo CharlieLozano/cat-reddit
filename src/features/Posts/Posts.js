@@ -10,6 +10,7 @@ import {
 } from "./postsSlice";
 import Post from "../../components/Post";
 import { Link } from "react-router-dom";
+// this is a dependency which I added to the project, you can find out more about it here https://www.npmjs.com/package/react-infinite-scroll-component
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export const Posts = () => {
@@ -18,7 +19,8 @@ export const Posts = () => {
 	const postsStatus = useSelector(selectPostsStatus);
 	const postsError = useSelector(selectPostsError);
 	const nextListing = useSelector(selectNextListing);
-	const [lastPost, setLastPost] = useState(false);
+	// this state is needed so that the infinite scroll knows when the last page is
+	const [lastPage, setLastPage] = useState(false);
 	// DELETE USEEFFECTONCE AND REPLACE WITH USEEFFECT BEFORE PRODUCTION VERSION. FOR MORE INFO SEE: https://dev.to/ag-grid/react-18-avoiding-use-effect-getting-called-twice-4i9e
 	useEffectOnce(() => {
 		if (postsStatus === "idle") {
@@ -30,9 +32,9 @@ export const Posts = () => {
 		dispatch(fetchPosts(nextListing));
 	};
 	if (postsStatus === "last") {
-		setLastPost(true);
+		setLastPage(true);
 	}
-
+	// no need to sort this any more as we now fetch by new. See Reddit.fetchFrontPage
 	const content = allPosts.map((post) => {
 		return (
 			<li key={post.id}>
@@ -42,14 +44,14 @@ export const Posts = () => {
 			</li>
 		);
 	});
-
+	// see documentation for info about the InfiniteScroll componant
 	return (
 		<ul className="postLink">
 			<InfiniteScroll
 				dataLength={content.length}
 				next={fetchNextPage}
 				loader={<h4>Loading...</h4>}
-				hasMore={!lastPost}
+				hasMore={!lastPage}
 				endMessage={
 					<p style={{ textAlign: "center" }}>
 						<b>Yay! You have seen it all</b>

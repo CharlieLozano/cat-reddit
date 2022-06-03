@@ -40,7 +40,7 @@ const Reddit = {
 
 		try {
 			let response;
-			// if we want to get the first frontpage
+			// if we want to get the first frontpage. this fetches it the first time as we are not passing an after parameter
 			if (!after) {
 				response = await getJson(endpoint);
 				// if we want to get any frontpage other than the first page
