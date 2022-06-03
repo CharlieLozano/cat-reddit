@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useEffectOnce } from "../../util/HelperFunc";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,16 +6,21 @@ import {
 	selectPostsStatus,
 	selectPostsError,
 	fetchPosts,
+	selectNextListing,
 } from "./postsSlice";
 import Post from "../../components/Post";
 import { Link } from "react-router-dom";
+// this is a dependency which I added to the project, you can find out more about it here https://www.npmjs.com/package/react-infinite-scroll-component
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export const Posts = () => {
 	const dispatch = useDispatch();
 	const allPosts = useSelector(selectAllPosts);
 	const postsStatus = useSelector(selectPostsStatus);
 	const postsError = useSelector(selectPostsError);
-
+	const nextListing = useSelector(selectNextListing);
+	// this state is needed so that the infinite scroll knows when the last page is
+	const [lastPage, setLastPage] = useState(false);
 	// DELETE USEEFFECTONCE AND REPLACE WITH USEEFFECT BEFORE PRODUCTION VERSION. FOR MORE INFO SEE: https://dev.to/ag-grid/react-18-avoiding-use-effect-getting-called-twice-4i9e
 	useEffectOnce(() => {
 		if (postsStatus === "idle") {
@@ -23,22 +28,39 @@ export const Posts = () => {
 		}
 	}, [postsStatus]);
 
+	const fetchNextPage = () => {
+		dispatch(fetchPosts(nextListing));
+	};
+	if (postsStatus === "last") {
+		setLastPage(true);
+	}
+	// no need to sort this any more as we now fetch by new. See Reddit.fetchFrontPage
+	const content = allPosts.map((post) => {
+		return (
+			<li key={post.id}>
+				<Link to={`${post.subreddit}/${post.id}`}>
+					<Post data={post} />
+				</Link>
+			</li>
+		);
+	});
+	// see documentation for info about the InfiniteScroll componant
 	return (
 		<ul className="postLink">
-			{/* if there are posts in state map over them and return a list of Post components which are shown on the front page */}
-			{allPosts &&
-				allPosts
-					.slice()
-					.sort((a, b) => b.created - a.created)
-					.map((post) => {
-						return (
-							<li key={post.id}>
-								<Link to={`${post.subreddit}/${post.id}`}>
-									<Post data={post} />
-								</Link>
-							</li>
-						);
-					})}
+			<InfiniteScroll
+				dataLength={content.length}
+				next={fetchNextPage}
+				loader={<h4>Loading...</h4>}
+				hasMore={!lastPage}
+				endMessage={
+					<p style={{ textAlign: "center" }}>
+						<b>Yay! You have seen it all</b>
+					</p>
+				}
+				scrollableTarget="postLink"
+			>
+				{content}
+			</InfiniteScroll>
 		</ul>
 	);
 };

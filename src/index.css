@@ -25,6 +25,12 @@ code {
 		monospace;
 }
 
+.postLink {
+	overflow: "auto";
+	display: "flex";
+	flex-direction: "column-reverse";
+}
+
 .postLink li {
 	list-style-type: none;
 }
