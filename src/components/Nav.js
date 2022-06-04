@@ -1,54 +1,65 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {	fetchPosts } from "../features/Posts/postsSlice";
 
 export default function Nav() {
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("")
-  const [filters, setFilters] = useState({
-    void: false,
-    endearing: false,
-    funny: false
-  })
+  const [subreddit, setSubreddit] = useState("None")
   
   const handleSearch = (event) => {
     const value = event.target.value
     setSearchTerm(value)
-
-    /*dispatch({
-      type: type, payload: {
-        searchTerm: searchTerm, filters: filters
-      }
-    })*/
+    dispatch(fetchPosts({searchTerm: value, subreddit: subreddit}));
   }
 
   const handleCheckbox = (event) => {
-    const id = event.target.id
-    setFilters({
-      ...filters,
-      [id]: !filters[id]
-    })
-
-    /*dispatch({
-      type: type, payload: {
-        searchTerm: searchTerm, filters: filters
-      }
-    })*/
+    const value = event.target.value
+    setSubreddit(value)
+    dispatch(fetchPosts({searchTerm: searchTerm, subreddit: value}));
   }
 
   return (
     <form>
       <input type="text" name="searchTerm" value={searchTerm} onChange={handleSearch}/>
-      <div className="filters-container">
+      <div className="subreddits-container">
         <label>
-          <input type="checkbox" id="endearing" checked={filters.endearing} onChange={handleCheckbox} name="endearing" />
-          Endearing
+          <input type="radio" id="" name="subreddit" value="None" onChange={handleCheckbox} checked={subreddit === 'None'} />
+          None
         </label>
         <label>
-          <input type="checkbox" id="void" name="void"  checked={filters.void} onChange={handleCheckbox} />
-          Void
+          <input type="radio" id="" name="subreddit" value="Kitten" onChange={handleCheckbox} checked={subreddit === 'Kitten'}/>
+          r/Kitten
         </label>
         <label>
-          <input type="checkbox" id="funny" name="funny"  checked={filters.funny} onChange={handleCheckbox} />
-          Funny
+          <input type="radio" id="" name="subreddit" value="SupermodelCats"  onChange={handleCheckbox} checked={subreddit === 'SupermodelCats'}/>
+          r/SupermodelCats
         </label>
+        <label>
+          <input type="radio" id="" name="subreddit" value="blackcats"  onChange={handleCheckbox} checked={subreddit === 'blackcats'}/>
+          r/blackcats
+        </label>
+        <label>
+          <input type="radio" id="" name="subreddit" value="catsAreAssholes"  onChange={handleCheckbox} checked={subreddit === 'catsAreAssholes'}/>
+          r/catsAreAssholes
+        </label>
+        <label>
+          <input type="radio" id="" name="subreddit" value="curledfeetsies"  onChange={handleCheckbox} checked={subreddit === 'curledfeetsies'}/>
+          r/curledfeetsies
+        </label>
+        <label>
+          <input type="radio" id="" name="subreddit" value="CatsStandingUp" onChange={handleCheckbox} checked={subreddit === 'CatsStandingUp'}/>
+          r/CatsStadingUp
+        </label>
+        <label>
+          <input type="radio" id="" name="subreddit" value="ragdolls" onChange={handleCheckbox} checked={subreddit === 'ragdolls'}/>
+          r/ragdolls
+        </label>
+
+
+
+
+        
         
         
         

@@ -7,6 +7,8 @@ import {
 	selectPostsError,
 	fetchPosts,
 	selectNextListing,
+	selectPostsSearchTerm,
+	selectPostsSubreddit
 } from "./postsSlice";
 import Post from "../../components/Post";
 import { Link } from "react-router-dom";
@@ -19,17 +21,19 @@ export const Posts = () => {
 	const postsStatus = useSelector(selectPostsStatus);
 	const postsError = useSelector(selectPostsError);
 	const nextListing = useSelector(selectNextListing);
+	const subreddit = useSelector(selectPostsSubreddit);
+	const searchTerm = useSelector(selectPostsSearchTerm);
 	// this state is needed so that the infinite scroll knows when the last page is
 	const [lastPage, setLastPage] = useState(false);
 	// DELETE USEEFFECTONCE AND REPLACE WITH USEEFFECT BEFORE PRODUCTION VERSION. FOR MORE INFO SEE: https://dev.to/ag-grid/react-18-avoiding-use-effect-getting-called-twice-4i9e
 	useEffectOnce(() => {
 		if (postsStatus === "idle") {
-			dispatch(fetchPosts());
+			dispatch(fetchPosts({searchTerm: searchTerm, subreddit: subreddit}));
 		}
 	}, [postsStatus]);
 
 	const fetchNextPage = () => {
-		dispatch(fetchPosts(nextListing));
+		dispatch(fetchPosts({searchTerm: searchTerm, subreddit: subreddit, after: nextListing}));
 	};
 	if (postsStatus === "last") {
 		setLastPage(true);

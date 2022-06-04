@@ -34,19 +34,36 @@ const filterByMedia = (response) => {
 
 // Reddit componenent
 const Reddit = {
-	async fetchHomePage(after) {
+	async fetchHomePage(conditions = {}) {
 		// Defining the url for the fetch
-		const endpoint = `https://www.reddit.com/user/outside-research4792/m/cats/new.json`;
+		let endpoint;
+		const { searchTerm , subreddit, after } = conditions
 
-		try {
-			let response;
-			// if we want to get the first frontpage. this fetches it the first time as we are not passing an after parameter
-			if (!after) {
-				response = await getJson(endpoint);
-				// if we want to get any frontpage other than the first page
-			} else {
-				response = await getJson(`${endpoint}?count=25&after=${after}`);
+		if(subreddit != "None" && !searchTerm){
+			endpoint = `https://www.reddit.com/r/${subreddit}/new.json`;	
+		}else if(subreddit != "None" && searchTerm){
+			endpoint = `https://www.reddit.com/r/${subreddit}/search.json?q=${searchTerm}&restrict_sr=1&sr_nsfw=&is_multi=1&sort=new`;
+		}else if(searchTerm){
+			endpoint = `https://www.reddit.com/user/outside-research4792/m/cats/search.json?q=${searchTerm}&restrict_sr=1&sr_nsfw=&is_multi=1&sort=new`;
+		} else{
+			endpoint = `https://www.reddit.com/user/outside-research4792/m/cats.json`;
+		}
+
+		if(after){
+			const lastLetter = endpoint.slice(-1)
+			if(lastLetter === "n"){
+				endpoint += "?"
+			}else{
+				endpoint += "&"
 			}
+			endpoint += `count=25&after=${after}`
+		}
+
+		console.log(endpoint)
+
+		try {		
+			const response = await getJson(endpoint);
+			// if we want to get the first frontpage. this fetches it the first time as we are not passing an after parameter
 			const children = filterByMedia(response);
 			// Make the listing array of objects
 			const listing = returnListing(children);
@@ -54,6 +71,8 @@ const Reddit = {
 			return {
 				after: response.data.after,
 				listing: listing,
+				subreddit: subreddit,
+				searchTerm: searchTerm
 			};
 		} catch (err) {
 			return err.message;
@@ -101,75 +120,7 @@ const Reddit = {
 		} catch (err) {
 			return err.message;
 		}
-	},
-
-	async fetchSearch(searchTerm, filters) {
-		// Defining the url for the fetch
-		const url = `https://www.reddit.com/user/outside-research4792/m/cats/search.json?q=`;
-		let endpoint = url + searchTerm;
-
-		try {
-			//Fetching and making a copy of the childrens since it will be a destructive process
-			const response = await getJson(endpoint);
-			let children = filterByMedia(response);
-			console.log(children);
-			// Filter by filters
-			filters.forEach((filter) => {
-				children = children.filter((child) =>
-					child.data.title.includes(filter)
-				);
-			});
-
-			// Make the listing array of objects
-			const listings = returnListing(children);
-
-			// Returning and object with two keys
-			return {
-				after: response.after,
-				before: response.before,
-				listings: listings,
-			};
-		} catch (err) {
-			return err.message;
-		}
-	},
-
-	async fetchScroll(searchTerm, filters, after) {
-		// Defining the url for the fetch
-		const url = `https://www.reddit.com/user/outside-research4792/m/cats/search.json?q=`;
-		let endpoint = url + searchTerm;
-
-		// Checking if there's after
-		if (after) {
-			endpoint = `${endpoint}&after=${after}`;
-		} else {
-			return;
-		}
-
-		try {
-			//Fetching and making a copy of the childrens since it will be a destructive process
-			const response = await getJson(endpoint);
-			let children = filterByMedia(response);
-
-			// Filter by filters
-			filters.forEach((filter) => {
-				children = children.filter((child) =>
-					child.data.title.includes(filter)
-				);
-			});
-
-			// Make the listing array of objects
-			const listings = returnListing(children);
-
-			// Returning and object with two keys
-			return {
-				after: response.after,
-				listings: listings,
-			};
-		} catch (err) {
-			return err.message;
-		}
-	},
+	}
 };
 
 export default Reddit;

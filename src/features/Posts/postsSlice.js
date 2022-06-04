@@ -3,11 +3,18 @@ import Reddit from "../../util/Reddit";
 
 export const fetchPosts = createAsyncThunk(
 	"posts/fetchPosts",
-	async (nextListing) => {
-		const response = await Reddit.fetchHomePage(nextListing);
+	async (conditions) => {
+		const response = await Reddit.fetchHomePage(conditions);
 		return response;
 	}
 );
+
+export const fetchSearch = createAsyncThunk("posts/fetchSearch", async (searchConditions) => {
+	const { searchTerm, subreddit } = searchConditions
+	const response = await Reddit.fetchSearch(searchTerm, subreddit);
+
+	return response;
+});
 
 const initialState = {
 	listing: [],
@@ -16,6 +23,9 @@ const initialState = {
 	status: "idle", // 'idle' || 'loading' || 'succeeded' || 'failed' || 'last'
 	// Same with the error status, it doesn't need to be a boolean, it can be a message which is the action.payload of the error message.
 	error: null,
+	searchTerm: "",
+	subreddit: "None"
+
 };
 
 const postsSlice = createSlice({
@@ -34,12 +44,30 @@ const postsSlice = createSlice({
 				} else {
 					state.status = "succeeded";
 				}
+				if(state.searchTerm !== action.payload.searchTerm || state.subreddit !== action.payload.subreddit){
+					state.listing = []
+				}
 				action.payload.listing.forEach((child) => state.listing.push(child));
 				state.before = action.payload.before;
 				state.after = action.payload.after;
+				state.subreddit = action.payload.subreddit;
+				state.searchTerm = action.payload.searchTerm;
 			})
 			.addCase(fetchPosts.rejected, (state, action) => {
 				state.status = "failed";
+				state.error = action.error.message;
+			})
+			.addCase(fetchSearch.pending, (state) =>{
+				state.status = "loading"
+			})
+			.addCase(fetchSearch.fulfilled, (state, action) =>{
+				state.status = "succeeded"
+				state.listing = []
+				action.payload.listing.forEach((child) => state.listing.push(child));
+				state.after = action.payload.after;
+			})
+			.addCase(fetchSearch.rejected, (state, action) =>{
+				state.status = "failed"
 				state.error = action.error.message;
 			});
 	},
@@ -50,5 +78,7 @@ export const selectNextListing = (state) => state.posts.after;
 export const selectAllPosts = (state) => state.posts.listing;
 export const selectPostsStatus = (state) => state.posts.status;
 export const selectPostsError = (state) => state.posts.error;
+export const selectPostsSearchTerm = (state) => state.posts.searchTerm;
+export const selectPostsSubreddit = (state) => state.posts.subreddit;
 
 export default postsSlice.reducer;
