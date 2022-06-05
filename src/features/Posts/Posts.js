@@ -28,20 +28,23 @@ export const Posts = () => {
 	// DELETE USEEFFECTONCE AND REPLACE WITH USEEFFECT BEFORE PRODUCTION VERSION. FOR MORE INFO SEE: https://dev.to/ag-grid/react-18-avoiding-use-effect-getting-called-twice-4i9e
 	useEffectOnce(() => {
 		if (postsStatus === "idle") {
-			dispatch(fetchPosts({searchTerm: searchTerm, subreddit: subreddit}));
+			dispatch(fetchPosts({searchTerm: searchTerm, subreddit: subreddit, after: "initial"}));
 		}
 	}, [postsStatus]);
 
 	const fetchNextPage = () => {
 		dispatch(fetchPosts({searchTerm: searchTerm, subreddit: subreddit, after: nextListing}));
 	};
-	if (postsStatus === "last") {
-		setLastPage(true);
-	}
+	///////////////////////////
+	//// Subject to be deleted
+	// if (postsStatus === "last") {
+	// 	setLastPage(true);
+	// }
 	// no need to sort this any more as we now fetch by new. See Reddit.fetchFrontPage
+	///////////////////////////
 	const content = allPosts.map((post) => {
 		return (
-			<li key={post.id}>
+			<li key={post.id + Date.now()}>
 				<Link to={`${post.subreddit}/${post.id}`}>
 					<Post data={post} />
 				</Link>
@@ -55,7 +58,7 @@ export const Posts = () => {
 				dataLength={content.length}
 				next={fetchNextPage}
 				loader={<h4>Loading...</h4>}
-				hasMore={!lastPage}
+				hasMore={nextListing}
 				endMessage={
 					<p style={{ textAlign: "center" }}>
 						<b>Yay! You have seen it all</b>

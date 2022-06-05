@@ -38,7 +38,8 @@ const Reddit = {
 		// Defining the url for the fetch
 		let endpoint;
 		const { searchTerm , subreddit, after } = conditions
-
+		console.log("Here")
+		console.log(`After: ${after}`)
 		if(subreddit != "None" && !searchTerm){
 			endpoint = `https://www.reddit.com/r/${subreddit}/new.json`;	
 		}else if(subreddit != "None" && searchTerm){
@@ -49,7 +50,7 @@ const Reddit = {
 			endpoint = `https://www.reddit.com/user/outside-research4792/m/cats.json`;
 		}
 
-		if(after){
+		if(after && after !== "initial"){
 			const lastLetter = endpoint.slice(-1)
 			if(lastLetter === "n"){
 				endpoint += "?"

@@ -10,13 +10,13 @@ export default function Nav() {
   const handleSearch = (event) => {
     const value = event.target.value
     setSearchTerm(value)
-    dispatch(fetchPosts({searchTerm: value, subreddit: subreddit}));
+    dispatch(fetchPosts({searchTerm: value, subreddit: subreddit, after: "initial"}));
   }
 
   const handleCheckbox = (event) => {
     const value = event.target.value
     setSubreddit(value)
-    dispatch(fetchPosts({searchTerm: searchTerm, subreddit: value}));
+    dispatch(fetchPosts({searchTerm: searchTerm, subreddit: value, after: "initial"}));
   }
 
   return (

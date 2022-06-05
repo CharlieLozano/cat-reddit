@@ -39,11 +39,14 @@ const postsSlice = createSlice({
 			})
 			// set the status to last if it is the last page
 			.addCase(fetchPosts.fulfilled, (state, action) => {
-				if (action.payload.after === "") {
-					state.status = "last";
-				} else {
-					state.status = "succeeded";
-				}
+				/////////////////////////////////////
+				////// Subject to be deleted
+				// if (action.payload.after === "") {
+				// 	state.status = "last";
+				// } else {
+				// 	state.status = "succeeded";
+				// }
+				//////////////////////////////////////
 				if(state.searchTerm !== action.payload.searchTerm || state.subreddit !== action.payload.subreddit){
 					state.listing = []
 				}
@@ -57,19 +60,6 @@ const postsSlice = createSlice({
 				state.status = "failed";
 				state.error = action.error.message;
 			})
-			.addCase(fetchSearch.pending, (state) =>{
-				state.status = "loading"
-			})
-			.addCase(fetchSearch.fulfilled, (state, action) =>{
-				state.status = "succeeded"
-				state.listing = []
-				action.payload.listing.forEach((child) => state.listing.push(child));
-				state.after = action.payload.after;
-			})
-			.addCase(fetchSearch.rejected, (state, action) =>{
-				state.status = "failed"
-				state.error = action.error.message;
-			});
 	},
 });
 
