@@ -38,14 +38,15 @@ const Reddit = {
 		// Defining the url for the fetch
 		let endpoint;
 		const { searchTerm , subreddit, after } = conditions
-		console.log("Here")
-		console.log(`After: ${after}`)
+		
+		const newSearchTerm = encodeURIComponent(searchTerm)
+
 		if(subreddit != "None" && !searchTerm){
 			endpoint = `https://www.reddit.com/r/${subreddit}/new.json`;	
 		}else if(subreddit != "None" && searchTerm){
-			endpoint = `https://www.reddit.com/r/${subreddit}/search.json?q=${searchTerm}&restrict_sr=1&sr_nsfw=&is_multi=1&sort=new`;
+			endpoint = `https://www.reddit.com/r/${subreddit}/search.json?q=${newSearchTerm}&restrict_sr=1&sr_nsfw=&is_multi=1&sort=new`;
 		}else if(searchTerm){
-			endpoint = `https://www.reddit.com/user/outside-research4792/m/cats/search.json?q=${searchTerm}&restrict_sr=1&sr_nsfw=&is_multi=1&sort=new`;
+			endpoint = `https://www.reddit.com/user/outside-research4792/m/cats/search.json?q=${newSearchTerm}&restrict_sr=1&sr_nsfw=&is_multi=1&sort=new`;
 		} else{
 			endpoint = `https://www.reddit.com/user/outside-research4792/m/cats.json`;
 		}
@@ -73,7 +74,7 @@ const Reddit = {
 				after: response.data.after,
 				listing: listing,
 				subreddit: subreddit,
-				searchTerm: searchTerm
+				searchTerm: newSearchTerm
 			};
 		} catch (err) {
 			return err.message;

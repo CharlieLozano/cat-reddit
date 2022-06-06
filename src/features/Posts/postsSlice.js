@@ -9,13 +9,6 @@ export const fetchPosts = createAsyncThunk(
 	}
 );
 
-export const fetchSearch = createAsyncThunk("posts/fetchSearch", async (searchConditions) => {
-	const { searchTerm, subreddit } = searchConditions
-	const response = await Reddit.fetchSearch(searchTerm, subreddit);
-
-	return response;
-});
-
 const initialState = {
 	listing: [],
 	after: "",
