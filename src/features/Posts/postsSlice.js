@@ -40,9 +40,12 @@ const postsSlice = createSlice({
 				// 	state.status = "succeeded";
 				// }
 				//////////////////////////////////////
+
+				// This just check if there's a new list because of a search or filter and it erase the previous fetch
 				if(state.searchTerm !== action.payload.searchTerm || state.subreddit !== action.payload.subreddit){
 					state.listing = []
 				}
+				
 				action.payload.listing.forEach((child) => state.listing.push(child));
 				state.before = action.payload.before;
 				state.after = action.payload.after;
