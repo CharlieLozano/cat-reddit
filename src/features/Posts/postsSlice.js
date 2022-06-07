@@ -11,7 +11,7 @@ export const fetchPosts = createAsyncThunk(
 
 const initialState = {
 	listing: [],
-	after: "",
+	after: "initial",
 	// My thinking here is that the status doesn't need to be a loading Boolean, it can equally be a string to reflect the status of the fetch request
 	status: "idle", // 'idle' || 'loading' || 'succeeded' || 'failed' || 'last'
 	// Same with the error status, it doesn't need to be a boolean, it can be a message which is the action.payload of the error message.

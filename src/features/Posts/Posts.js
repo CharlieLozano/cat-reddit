@@ -62,7 +62,6 @@ export const Posts = () => {
 				endMessage={
 					<p style={{ textAlign: "center" }}>
 						{allPosts.length === 0 ? <b>Oops! No results</b> : <b>Yay! You have seen it all</b>}
-						
 					</p>
 				}
 				scrollableTarget="postLink"
