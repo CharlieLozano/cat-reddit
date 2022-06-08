@@ -35,10 +35,11 @@ const filterByMedia = (response) => {
 const constructEndpoint = (conditions) => {
 	const { searchTerm , subreddit, after } = conditions
 	const encodedSearchTerm = encodeURIComponent(searchTerm)
-	let connector = "?"
 	let endpoint = 	`https://www.reddit.com/user/outside-research4792/m/cats/new.json`
+	// The connector is for attaching the after to the url, there are two options: ? and &
+	let connector = "?"
 
-	if(subreddit != "None"){
+	if(subreddit !== "None"){
 		endpoint = `https://www.reddit.com/r/${subreddit}/new.json`;
 	}
 	
@@ -59,14 +60,14 @@ const constructEndpoint = (conditions) => {
 // Reddit componenent
 const Reddit = {
 	async fetchHomePage(conditions = {}) {
-		// Defining the url for the fetch
 		
-		const { searchTerm , subreddit, after } = conditions
+		const { searchTerm , subreddit } = conditions
+		// Builds the endpoint for the reddit fetch
 		const endpoint = constructEndpoint(conditions);
 
 		try {		
 			const response = await getJson(endpoint);
-			// if we want to get the first frontpage. this fetches it the first time as we are not passing an after parameter
+			// Filters only the post with images
 			const children = filterByMedia(response);
 			// Make the listing array of objects
 			const listing = returnListing(children);

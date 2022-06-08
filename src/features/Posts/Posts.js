@@ -35,13 +35,7 @@ export const Posts = () => {
 	const fetchNextPage = () => {
 		dispatch(fetchPosts({searchTerm: searchTerm, subreddit: subreddit, after: nextListing}));
 	};
-	///////////////////////////
-	//// Subject to be deleted
-	// if (postsStatus === "last") {
-	// 	setLastPage(true);
-	// }
-	// no need to sort this any more as we now fetch by new. See Reddit.fetchFrontPage
-	///////////////////////////
+
 	const content = allPosts.map((post) => {
 		return (
 			<li key={post.id + Date.now()}>

@@ -30,24 +30,14 @@ const postsSlice = createSlice({
 			.addCase(fetchPosts.pending, (state) => {
 				state.status = "loading";
 			})
-			// set the status to last if it is the last page
-			.addCase(fetchPosts.fulfilled, (state, action) => {
-				/////////////////////////////////////
-				////// Subject to be deleted
-				// if (action.payload.after === "") {
-				// 	state.status = "last";
-				// } else {
-				// 	state.status = "succeeded";
-				// }
-				//////////////////////////////////////
 
-				// This just check if there's a new list because of a search or filter and it erase the previous fetch
+			.addCase(fetchPosts.fulfilled, (state, action) => {
+				// The listing gets cleared if there's a change in searchTerm or subreddit for the new listing
 				if(state.searchTerm !== action.payload.searchTerm || state.subreddit !== action.payload.subreddit){
 					state.listing = []
 				}
 				
 				action.payload.listing.forEach((child) => state.listing.push(child));
-				state.before = action.payload.before;
 				state.after = action.payload.after;
 				state.subreddit = action.payload.subreddit;
 				state.searchTerm = action.payload.searchTerm;
