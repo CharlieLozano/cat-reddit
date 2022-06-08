@@ -1,58 +1,59 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {	fetchPosts } from "../features/Posts/postsSlice";
 
 export default function Nav() {
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("")
-  const [filters, setFilters] = useState({
-    void: false,
-    endearing: false,
-    funny: false
-  })
+  const [subreddit, setSubreddit] = useState("None")
+  const [subsSelection, setSubsSelection] = useState("hidden")
   
   const handleSearch = (event) => {
     const value = event.target.value
     setSearchTerm(value)
-
-    /*dispatch({
-      type: type, payload: {
-        searchTerm: searchTerm, filters: filters
-      }
-    })*/
+    dispatch(fetchPosts({searchTerm: value, subreddit: subreddit, after: "initial"}));
   }
 
   const handleCheckbox = (event) => {
-    const id = event.target.id
-    setFilters({
-      ...filters,
-      [id]: !filters[id]
-    })
+    const value = event.target.value
+    setSubreddit(value)
+    dispatch(fetchPosts({searchTerm: searchTerm, subreddit: value, after: "initial"}));
+  }
 
-    /*dispatch({
-      type: type, payload: {
-        searchTerm: searchTerm, filters: filters
-      }
-    })*/
+  const toggleSubreddits = (event) => {
+    event.preventDefault();
+    subsSelection === 'hidden' ? setSubsSelection('show') : setSubsSelection('hidden')
+  }
+
+  const subredditsContainer = () => {
+      const subredditsArray = ['Kitten','SupermodelCats','blackcats','catsAreAssholes','curledfeetsies','CatsStandingUp','ragdolls']
+
+      return (
+        <div className="subreddits-container">
+          <label>
+            <input type="radio" id="subreddit-menu-none" name="subreddit" value="None" onChange={handleCheckbox} checked={subreddit === 'None'} />
+            <span className='subreddit-none'>None</span>
+          </label>
+          {subredditsArray.map(element => {
+            return (
+              <label>
+                <input type="radio" id={`subreddit-menu-${element}`} name="subreddit" value={element} onChange={handleCheckbox} checked={subreddit === element}/>
+                <span className='subreddit-r'>r/</span>{element}
+              </label>
+            )
+          })}
+
+        </div>
+      )
   }
 
   return (
     <form>
-      <input type="text" name="searchTerm" value={searchTerm} onChange={handleSearch}/>
-      <div className="filters-container">
-        <label>
-          <input type="checkbox" id="endearing" checked={filters.endearing} onChange={handleCheckbox} name="endearing" />
-          Endearing
-        </label>
-        <label>
-          <input type="checkbox" id="void" name="void"  checked={filters.void} onChange={handleCheckbox} />
-          Void
-        </label>
-        <label>
-          <input type="checkbox" id="funny" name="funny"  checked={filters.funny} onChange={handleCheckbox} />
-          Funny
-        </label>
-        
-        
-        
-      </div>
+      <input className="search-bar" type="text" name="searchTerm" value={searchTerm} onChange={handleSearch}/>
+      <button className="subreddits-btn" onClick={toggleSubreddits}>
+        Subreddits
+      </button>
+      { subsSelection === 'show' ? subredditsContainer() : undefined}
     </form>
   );
 }
