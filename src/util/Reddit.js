@@ -34,44 +34,22 @@ const filterByMedia = (response) => {
 
 const constructEndpoint = (conditions) => {
 	const { searchTerm , subreddit, after } = conditions
-	let endpoint;	
 	const encodedSearchTerm = encodeURIComponent(searchTerm)
+	let connector = "?"
+	let endpoint = 	`https://www.reddit.com/user/outside-research4792/m/cats/new.json`
 
-	// No searchTerm || No subreddit
-	if(!searchTerm && subreddit == "None"){
-		endpoint = `https://www.reddit.com/user/outside-research4792/m/cats.json`;
-	
-	// There is searchTerm || No subreddit
-	} else if(searchTerm && subreddit == "None" ){
-		const baseUrl = `https://www.reddit.com/user/outside-research4792/m/cats/search.json?q=`
-		endpoint = `${baseUrl}${encodedSearchTerm}&restrict_sr=1&sr_nsfw=&is_multi=1&sort=new`;
-	
-	// No searchTerm || There is subreddit
-	} else if(!searchTerm && subreddit != "None" ){
+	if(subreddit != "None"){
 		endpoint = `https://www.reddit.com/r/${subreddit}/new.json`;
-
-	// There is searchTerm || There is subreddit
-	} else if(searchTerm && subreddit != "None"){
-		const baseUrl = `https://www.reddit.com/r/${subreddit}/search.json?q=`
-		endpoint = `${baseUrl}${encodedSearchTerm}&restrict_sr=1&sr_nsfw=&is_multi=1&sort=new`;
 	}
 	
+	if(searchTerm){
+		connector = '&'
+		endpoint = endpoint.slice(0, endpoint.length - 8)
+		endpoint += `search.json?q=${encodedSearchTerm}&restrict_sr=1&sr_nsfw=&is_multi=1&sort=new`
+	}
 
-	// Adding after if it exists
-	// The initial after indicates that is the first fetch so it doesn't counts
-	if(after && after !== "initial"){
-		
-		// Define the connector before ${after}
-		const lastLetter = endpoint.slice(-1)
-		// if it ends in .json = ?
-		if(lastLetter === "n"){
-			endpoint += "?"
-		// if it does not ends in .json = &
-		}else{
-			endpoint += "&"
-		}
-		// add after
-		endpoint += `count=25&after=${after}`
+	if(after && after !== 'initial'){
+		endpoint += `${connector}count=25&after=${after}`
 	}
 
 	return endpoint;
