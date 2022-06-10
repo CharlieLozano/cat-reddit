@@ -48,7 +48,7 @@ export default function Nav() {
   }
 
   return (
-    <form>
+    <form className='nav-menu'>
       <input className="search-bar" type="text" name="searchTerm" value={searchTerm} onChange={handleSearch}/>
       <button className="subreddits-btn" onClick={toggleSubreddits}>
         Subreddits
