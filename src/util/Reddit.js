@@ -88,17 +88,18 @@ const Reddit = {
 
 		try {
 			const response = await getJson(endpoint);
-
 			// Creating Post Object
 			let short = response[0].data.children[0].data;
 
 			const post = {
 				id: short.id,
-				url: short.permalink,
+				url: short.url,
 				author: short.author,
 				title: short.title,
+				subreddit: short.subreddit,
 				thumbnail: short.thumbnail,
-				created: short.created,
+				selftext: short.selftext,
+				created: short.created_utc,
 			};
 
 			// Creating Comments Array
@@ -112,7 +113,7 @@ const Reddit = {
 					author: short.author,
 					body: short.body,
 					ups: short.ups,
-					created: short.created,
+					created: short.created_utc,
 				});
 			});
 

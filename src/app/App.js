@@ -6,9 +6,17 @@ import PostPage from "../pages/PostPage";
 export default function App() {
 	return (
 		<Router>
-			<Link to={"/"}>
-				<h1>Cat Reddit</h1>
-			</Link>
+				<header>
+					<Link to={"/"}>
+						<h1>Cat Reddit</h1>
+					</Link>
+					<a href="https://github.com/CharlieLozano/cat-reddit" target="_blank" rel="noreferrer">
+						<img
+							src={require('../media/reddit-logo.png')}
+							alt="example"
+						/>
+					</a>
+				</header>
 			<Routes>
 				<Route index path="/" element={<HomePage />} />
 				<Route path="/:subreddit/:postId" element={<PostPage />} />

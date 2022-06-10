@@ -18,7 +18,7 @@ const TimeDate = ({ timestamp }) => {
 	}
 	// return a timeAgo stamp for each post
 	return (
-		<span title={timestamp}>
+		<span title={timestamp} className="timestamp">
 			&nbsp; <i>{timeAgo}</i>
 		</span>
 	);
