@@ -1,20 +1,24 @@
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fascinate&display=swap');
+
 /* general style, center scale with size */
 html {
 	box-sizing: border-box;
 	background: #333;
 	color: whitesmoke;
 	min-height: 100vh;
-	font-size: 1.5rem;
-	padding: 0 10% 10%;
+	font-size: 18px;
+	padding: 0 20% 10%;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
 		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
 		sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-
-h1{
-	margin: 0;
+/* don't know why this is here but it came with create-react-app */
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+		monospace;
 }
 
 /* reset all styles for links */
@@ -23,60 +27,78 @@ a {
 	text-decoration: none;
 }
 
+/* header */
+
+h1{
+  font-family: 'Fascinate', cursive;
+	margin: 0;
+  font-size: 5rem;
+}
+
+
 header{
 	display: flex;
-	align-items: baseline;
+	flex-direction: column;
+  align-items: center;
 	margin: 60px 0 20px 0px;
-
 }
 
-header img{
-	height: 30px;
-	width: 30px;
-	margin-left: 20px;
+.about-container {
+  background-color: #2b2b2b;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+	padding: 20px 0;
+  border: 2px solid #424242;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+.about-container span {
+  margin-left: 10px;
 }
 
-/* don't know why this is here but it came with create-react-app */
-code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-		monospace;
+.about-container button {
+  width: 40px;
+  border-radius: 50%;
+  background-color: #b80b47;
+	color: white;
+	border: solid 1px #db2565;
+  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
 }
 
-.postLink {
-	overflow: "auto";
-	display: "flex";
-	flex-direction: "column-reverse";
-	padding: 0;
+.about-container button:hover {
+  background-color: #db2565
 }
 
-.postLink li {
-	list-style-type: none;
+.about-container img {
+  width: 100%;
+  height: auto;
 }
 
-.postLink li:hover {
-	background-color: #424242;
+/* nav */
+nav {
+  min-width: 100%;
 }
 
-/* set post-img size relative to parent component */
-.post-img {
-	width: 100%;
-	height: auto;
-	margin: 10px 0;
-}
-/* pust a bit of space above ane below each card, we can change this later to make the post card itself put space above and below */
-.post {
-	padding: 20px;
-}
-.post h2 {
-	margin-top: 10px;
+nav form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .search-bar {
 	border-radius: 20px;
-	padding: 12px 20px;
+	/* padding: 12px 20px; */
+  max-width: 100%;
+  flex-grow: 2;
+  height: 40px;
 }
 
 .subreddits-btn {
+  height: 45px;
+  cursor: pointer;
+  width: 150px;
 	margin: 10px;
 	padding: 10px 20px;
 	border-radius: 20px;
@@ -85,6 +107,11 @@ code {
 	background-color: #b80b47;
 	color: white;
 	border: solid 1px #db2565;
+  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+}
+
+.subreddits-btn:hover {
+  background-color: #db2565
 }
 
 .subreddits-container {
@@ -93,11 +120,6 @@ code {
 	background-color: #2b2b2b;
 	display: flex;
 	flex-wrap: wrap;
-	
-}
-
-.subreddits-container label {
-	flex: 1 0 21%;
 }
 
 .subreddit-r {
@@ -111,6 +133,67 @@ code {
 	margin-left: 10px;
 }
 
+
+/* posts */
+
+.postLink {
+	overflow: "auto";
+	display: "flex";
+	flex-direction: "column-reverse";
+	padding: 0;
+}
+
+.postLink li {
+	list-style-type: none;
+  background-color: #292929;
+}
+
+.postLink li:hover {
+	background-color: #424242;
+}
+
+/* set post-img size relative to parent component */
+.post-img {
+	width: 90%;
+	height: auto;
+	margin: auto;
+  padding: 5%;
+}
+/* pust a bit of space above ane below each card, we can change this later to make the post card itself put space above and below */
+.post, .comment {
+	padding: 20px;
+  border: 2px solid #424242;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.post h2 {
+	margin-top: 10px;
+}
+
+.timestamp {
+  display: flex;
+  grid-area: timestamp;
+}
+/* comments */
+
+.comment {
+  display: grid;
+  grid-template-columns:  50px auto;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas:
+    "ups author"
+    "ups body"
+    "ups timestamp"
+}
+
+.author {
+  grid-area: author;
+}
+
+.body {
+  grid-area: body;
+}
 .comments li{
 	list-style-type: none;
 }
@@ -130,17 +213,42 @@ code {
 	margin-left: 0;
 }
 
+.up-container {
+  min-width: 50px;
+  grid-area: ups;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
 .up-container img{
-	display: inline;
+
 	width: 20px;
 	height: 20px;
 }
 
 .up-container h4{
-	display: inline;
 	margin-left: 10px;
 }
 
 .comment {
 	margin-bottom: 50px;
+}
+
+@media (max-width: 1100px) {
+  h1 {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 872px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 602px) {
+  html {
+    padding: 0;
+  }
 }

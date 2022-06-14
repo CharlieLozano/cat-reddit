@@ -48,12 +48,14 @@ export default function Nav() {
   }
 
   return (
-    <form className='nav-menu'>
-      <input className="search-bar" type="text" name="searchTerm" value={searchTerm} onChange={handleSearch}/>
-      <button className="subreddits-btn" onClick={toggleSubreddits}>
-        Subreddits
-      </button>
-      { subsSelection === 'show' ? subredditsContainer() : undefined}
-    </form>
+    <nav>
+      <form>
+        <input className="search-bar" type="text" name="searchTerm" value={searchTerm} onChange={handleSearch}/>
+        <button className="subreddits-btn" onClick={toggleSubreddits}>
+          Subreddits
+        </button>
+        { subsSelection === 'show' ? subredditsContainer() : undefined}
+      </form>
+    </nav>
   );
 }

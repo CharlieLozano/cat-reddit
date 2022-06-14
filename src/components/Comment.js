@@ -8,13 +8,13 @@ const Comment = ({ data }) => {
 
 	return (
 		<div className="comment" id={id}>
-			<h4>{author}</h4>
-					{body && <p>{body}</p>}
-			<div className="up-container">
+      <div className="up-container">
 				<img className="ups-img" src={require("../media/up-arrow.png")} />
-				<h4>{ups}</h4>
+				<span>{ups}</span>
 			</div>
-			<TimeDate timestamp={created} />
+			<h4 className="author">{author}</h4>
+			{body && <p className="body">{body}</p>}
+			<TimeDate className="timestamp" timestamp={created} />
 		</div>
 	);
 };

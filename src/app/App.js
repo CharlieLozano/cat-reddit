@@ -10,12 +10,17 @@ export default function App() {
 					<Link to={"/"}>
 						<h1>Cat Reddit</h1>
 					</Link>
-					<a href="https://github.com/CharlieLozano/cat-reddit" target="_blank" rel="noreferrer">
-						<img
-							src={require('../media/reddit-logo.png')}
-							alt="example"
-						/>
-					</a>
+          <div className="about-container">
+            <button >
+              <a href="https://github.com/CharlieLozano/cat-reddit" target="_blank" rel="noreferrer">
+                <img
+                src={require('../media/reddit-logo.png')}
+                alt="example"
+                />
+					    </a>
+            </button>
+            <span> by Charlie Lozano and Mathew May</span>
+          </div>
 				</header>
 			<Routes>
 				<Route index path="/" element={<HomePage />} />
