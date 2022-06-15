@@ -8,7 +8,7 @@ const Post = ({ data }) => {
 		<div className="post">
 			<h2>{title}</h2>
 			<span>r/{subreddit}</span>
-			<img className="post-img" src={url} />
+			<img className="post-img" alt="" src={url} />
 			{selftext && <p>{selftext}</p>}
 			<TimeDate timestamp={created} />
 		</div>
