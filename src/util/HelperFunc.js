@@ -1,13 +1,11 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 
 // DELETE ME AND REPLACE INSTANCES WITH USEEFFECT IN PRODUCTION
 
-export const useEffectOnce = (effect) => {
+export const useEffect = (effect) => {
 	const destroyFunc = useRef();
 	const effectCalled = useRef(false);
 	const renderAfterCalled = useRef(false);
-	const [val, setVal] = useState(0);
-
 	if (effectCalled.current) {
 		renderAfterCalled.current = true;
 	}
@@ -20,8 +18,6 @@ export const useEffectOnce = (effect) => {
 		}
 
 		// this forces one render after the effect is run
-		setVal((val) => val + 1);
-
 		return () => {
 			// if the comp didn't render since the useEffect was called,
 			// we know it's the dummy React cycle

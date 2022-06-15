@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useEffectOnce } from "../../util/HelperFunc";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	selectAllPosts,
 	selectPostsStatus,
-	selectPostsError,
 	fetchPosts,
 	selectNextListing,
 	selectPostsSearchTerm,
@@ -19,17 +17,16 @@ export const Posts = () => {
 	const dispatch = useDispatch();
 	const allPosts = useSelector(selectAllPosts);
 	const postsStatus = useSelector(selectPostsStatus);
-	const postsError = useSelector(selectPostsError);
 	const nextListing = useSelector(selectNextListing);
 	const subreddit = useSelector(selectPostsSubreddit);
 	const searchTerm = useSelector(selectPostsSearchTerm);
-	// this state is needed so that the infinite scroll knows when the last page is
-	const [lastPage, setLastPage] = useState(false);
 	// DELETE USEEFFECTONCE AND REPLACE WITH USEEFFECT BEFORE PRODUCTION VERSION. FOR MORE INFO SEE: https://dev.to/ag-grid/react-18-avoiding-use-effect-getting-called-twice-4i9e
-	useEffectOnce(() => {
+	useEffect(() => {
 		if (postsStatus === "idle") {
 			dispatch(fetchPosts({searchTerm: searchTerm, subreddit: subreddit, after: "initial"}));
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [postsStatus]);
 
 	const fetchNextPage = () => {

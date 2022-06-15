@@ -36,7 +36,6 @@ const postsSlice = createSlice({
 				if(state.searchTerm !== action.payload.searchTerm || state.subreddit !== action.payload.subreddit){
 					state.listing = []
 				}
-				
 				action.payload.listing.forEach((child) => state.listing.push(child));
 				state.after = action.payload.after;
 				state.subreddit = action.payload.subreddit;
