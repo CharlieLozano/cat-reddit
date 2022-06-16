@@ -1,4 +1,10 @@
-# Getting Started with Create React App and Redux
+# Cat Reddit
+
+This is a react application that uses the reddit API where you can "infinitely" scroll through cat pictures of multiple subreddits combined. You can search by words on the search bar and it has a subreddit menu where you can filter through specific subreddits. You can also click on each post to see the post individually along its comments.
+
+You can see the website up and running [here](https://cat-reddit-project.netlify.app/)
+
+## Getting Started with Create React App and Redux
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
@@ -14,10 +20,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+### `npm audit --production`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+In case of vulnerabilities preventing to start the application, This fix this issues for production.
 
 ### `npm run build`
 
@@ -44,3 +49,5 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+#### This was a project for the Full Stack course in Codecademy
