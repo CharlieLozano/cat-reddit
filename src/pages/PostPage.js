@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Reddit from "../util/Reddit";
 import Post from '../components/Post'
 import Comments from '../components/Comments'
@@ -18,6 +18,18 @@ const PostPage = () => {
 		}
 	}
 
+	const goBackContainer = () =>{
+		return(		
+			<Link to={"/"}>	
+				<div className="about-container">
+						
+							<span className="go-back">Go Back</span>
+						
+				</div>
+			</Link>
+		)
+	}
+
 	// Before build, use useEffect() instead
 	useEffect(() => {
 		fetchPostAndComments()
@@ -27,6 +39,7 @@ const PostPage = () => {
 
 	return (
 		<div>
+			{ post ? goBackContainer() : null	}
 			{ post ? <Post data={post}/> : <h4>Post not found</h4>	}
 			{ post ? <Comments comments={comments} /> : null }
 		</div>

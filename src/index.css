@@ -238,6 +238,9 @@ nav form {
 	margin-bottom: 50px;
 }
 
+.go-back {
+	font-weight: bold;
+}
 
 @media (max-width: 1350px) {
 	.subreddits-container {
